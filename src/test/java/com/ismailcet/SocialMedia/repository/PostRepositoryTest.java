@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,6 +36,35 @@ class PostRepositoryTest {
                         timezone,"Deneme Post ","url",user
                 );
         postRepository.save(post);
+    }
+    @Test
+    public void getAllPosts(){
+        List<Post> posts =
+                postRepository.findAll();
+
+        System.out.println(posts);
+    }
+
+    @Test
+    public void deletePostById(){
+        postRepository.deleteById(15);
+    }
+
+    @Test
+    public void updatePostById(){
+        Post post =
+                postRepository.findById(15).orElse(null);
+
+        Post newPost = new Post();
+        if(post != null){
+            newPost.setId(post.getId());
+            newPost.setCreatedDate(post.getCreatedDate());
+            newPost.setUrl(post.getUrl());
+            newPost.setUser(post.getUser());
+            newPost.setContent("Content Updated");
+
+            postRepository.save(newPost);
+        }
     }
 
 

@@ -20,6 +20,7 @@ public class Like {
     )
     @JoinColumn(
             name = "byuser_id",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -32,6 +33,7 @@ public class Like {
     )
     @JoinColumn(
             name="post_id",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -75,5 +77,14 @@ public class Like {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "id=" + id +
+                ", user=" + user +
+                ", post=" + post +
+                '}';
     }
 }

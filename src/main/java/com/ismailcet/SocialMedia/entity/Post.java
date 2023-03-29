@@ -91,4 +91,17 @@ public class Post {
     public void setUser(User user) {
         this.user = user;
     }
+
+    //toString()
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", createdDate=" + createdDate +
+                ", content='" + content + '\'' +
+                ", url='" + url + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

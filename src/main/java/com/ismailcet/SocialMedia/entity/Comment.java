@@ -21,23 +21,19 @@ public class Comment {
     @Column(name="created_date")
     private LocalDateTime createdDate;
 
-    @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name="byuser_id",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name="post_id",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)

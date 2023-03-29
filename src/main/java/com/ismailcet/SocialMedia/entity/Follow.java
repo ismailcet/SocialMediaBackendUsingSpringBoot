@@ -15,22 +15,22 @@ public class Follow {
     private Integer id;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
     @JoinColumn(
             name="followed_userid",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User followUser;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
     @JoinColumn(
             name="following_userid",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
