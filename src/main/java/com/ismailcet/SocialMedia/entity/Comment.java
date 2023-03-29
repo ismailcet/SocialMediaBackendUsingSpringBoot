@@ -13,7 +13,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private Integer id;
 
     @Column(name="comment")
     private String comment;
@@ -58,7 +58,7 @@ public class Comment {
 
     //Getter
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -79,6 +79,11 @@ public class Comment {
     }
 
     //Setter
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void setComment(String comment) {
         this.comment = comment;

@@ -10,7 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private Integer id;
 
     @NotNull(message = "Username may not be null")
     @Column(name="username")
@@ -46,7 +46,7 @@ public class User {
     }
 
     //Getter
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -97,5 +97,9 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

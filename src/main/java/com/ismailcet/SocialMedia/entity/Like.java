@@ -12,7 +12,7 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
@@ -50,7 +50,7 @@ public class Like {
 
     //Getter
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -63,6 +63,11 @@ public class Like {
     }
 
     //Setter
+
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public void setUser(User user) {
         this.user = user;

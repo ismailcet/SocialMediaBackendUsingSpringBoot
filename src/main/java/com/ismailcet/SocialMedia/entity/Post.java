@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,7 +14,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
     @Column(name="created_Date")
     private LocalDateTime createdDate;
 
@@ -29,6 +30,7 @@ public class Post {
     )
     @JoinColumn(
             name = "user_id",
+            referencedColumnName = "id",
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -49,7 +51,7 @@ public class Post {
 
     //Getter
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -71,6 +73,9 @@ public class Post {
 
     //Setter
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }

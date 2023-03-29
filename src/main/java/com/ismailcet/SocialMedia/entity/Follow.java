@@ -12,7 +12,7 @@ public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
@@ -50,7 +50,7 @@ public class Follow {
 
     //Getter
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -64,6 +64,9 @@ public class Follow {
 
     //Setter
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public void setFollowUser(User followUser) {
         this.followUser = followUser;
     }
