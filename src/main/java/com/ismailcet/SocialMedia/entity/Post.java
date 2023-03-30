@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="posts")
@@ -21,8 +22,6 @@ public class Post {
     @Column(name="content")
     private String content;
 
-    @Column(name="url")
-    private String url;
 
     @ManyToOne(
             cascade = CascadeType.ALL,
@@ -36,16 +35,20 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    @OneToMany(mappedBy = "id")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "id")
+    private List<Like> likes;
     //NoArgsConstructor
     public Post(){
 
     }
     //AllArgsConstructor
 
-    public Post(LocalDateTime createdDate, String content, String url, User user) {
+    public Post(LocalDateTime createdDate, String content, User user) {
         this.createdDate = createdDate;
         this.content = content;
-        this.url = url;
         this.user = user;
     }
 
@@ -63,12 +66,16 @@ public class Post {
         return content;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public User getUser() {
         return user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
     }
 
     //Setter
@@ -76,6 +83,7 @@ public class Post {
     public void setId(Integer id) {
         this.id = id;
     }
+
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
@@ -84,15 +92,19 @@ public class Post {
         this.content = content;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }
 
-    //toString()
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    //ToString
 
     @Override
     public String toString() {
@@ -100,7 +112,6 @@ public class Post {
                 "id=" + id +
                 ", createdDate=" + createdDate +
                 ", content='" + content + '\'' +
-                ", url='" + url + '\'' +
                 ", user=" + user +
                 '}';
     }

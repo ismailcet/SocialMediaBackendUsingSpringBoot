@@ -4,53 +4,38 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name="likesforpostsbyuser")
-public class Like {
+@Table(name = "share")
+public class Share {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name="id")
     private Integer id;
 
-    @ManyToOne(
-            cascade = CascadeType.ALL,
+    @Column(name="url")
+    private String url;
+
+    @OneToOne(
             fetch = FetchType.EAGER
     )
     @JoinColumn(
-            name = "byuser_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
-
-
-    @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
-    @JoinColumn(
-            name="post_id",
-            referencedColumnName = "id",
-            nullable = false
+            name = "post_id",
+            referencedColumnName = "id"
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
-
     //NoArgsConstructor
-    public Like(){
 
+    public Share() {
     }
 
     //AllArgsConstructor
-    public Like(User user, Post post) {
-        this.user = user;
+
+    public Share(String url, Post post) {
+        this.url = url;
         this.post = post;
     }
 
@@ -60,8 +45,8 @@ public class Like {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUrl() {
+        return url;
     }
 
     public Post getPost() {
@@ -70,24 +55,25 @@ public class Like {
 
     //Setter
 
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setPost(Post post) {
         this.post = post;
     }
 
+    //ToString
+
     @Override
     public String toString() {
-        return "Like{" +
+        return "Share{" +
                 "id=" + id +
-                ", user=" + user +
+                ", url='" + url + '\'' +
                 ", post=" + post +
                 '}';
     }

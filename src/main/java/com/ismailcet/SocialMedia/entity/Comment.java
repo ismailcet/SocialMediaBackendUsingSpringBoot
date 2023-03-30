@@ -96,4 +96,15 @@ public class Comment {
     public void setPost(Post post) {
         this.post = post;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                ", createdDate=" + createdDate +
+                ", user=" + user +
+                ", post=" + post +
+                '}';
+    }
 }

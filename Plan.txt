@@ -1,0 +1,9 @@
+DB server, DB driver, Database
+Setup, creating db, table and CRUD ops
+PgSQL data types
+JOINS, UNIONS, VIEWS
+ACID theorem
+Normalization
+Transactions
+N+1 problem
+How to manage deleted entities?

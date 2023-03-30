@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,6 +22,7 @@ class CommentRepositoryTest {
     private PostRepository postRepository;
 
 
+    //Create a Comment Record
     @Test
     public void createComment(){
         LocalDateTime timezone
@@ -37,11 +39,13 @@ class CommentRepositoryTest {
         commentRepository.save(comment);
     }
 
+    //Delete a Comment Record
     @Test
     public void deleteCommentById(){
         commentRepository.deleteById(7);
     }
 
+    //Update a comment record
     @Test
     public void updateCommentById(){
         Comment comment =
@@ -60,5 +64,14 @@ class CommentRepositoryTest {
             commentRepository.save(newComment);
         }
 
+    }
+
+    //Get the comment(s) with post id
+    @Test
+    public void getCommentByPostId(){
+        List<Comment> comments =
+                commentRepository.findByPostId(17);
+
+        System.out.println("Comment : " + comments);
     }
 }

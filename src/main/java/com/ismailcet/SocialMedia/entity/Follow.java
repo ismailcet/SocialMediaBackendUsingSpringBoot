@@ -74,4 +74,13 @@ public class Follow {
     public void setFollowingUser(User followingUser) {
         this.followingUser = followingUser;
     }
+
+    @Override
+    public String toString() {
+        return "Follow{" +
+                "id=" + id +
+                ", followUser=" + followUser +
+                ", followingUser=" + followingUser +
+                '}';
+    }
 }

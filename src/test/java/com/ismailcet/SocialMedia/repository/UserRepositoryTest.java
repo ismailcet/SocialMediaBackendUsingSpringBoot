@@ -15,7 +15,7 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-
+    //Create an User Record
     @Test
     public void createUser(){
         User user = new User(
@@ -24,6 +24,7 @@ class UserRepositoryTest {
         userRepository.save(user);
     }
 
+    //Get All Users Record
     @Test
     public void getAllUsers(){
        List<User> userList =
@@ -31,11 +32,13 @@ class UserRepositoryTest {
         System.out.println("Users : " + userList);
     }
 
+    //Delete an User Record
     @Test
     public void deleteUserById(){
         userRepository.deleteById(120);
     }
 
+    //Update an User Record
     @Test
     public void updateUserById(){
         User user =
@@ -56,6 +59,7 @@ class UserRepositoryTest {
         System.out.println("New User : " + newUser);
     }
 
+    //Get User Using user_id
     @Test
     public void getUserById(){
         User user =
@@ -64,6 +68,7 @@ class UserRepositoryTest {
         System.out.println("user : " + user.getUserName());
     }
 
+    //Get user by username
     @Test
     public void getUserByUserName(){
         User user =

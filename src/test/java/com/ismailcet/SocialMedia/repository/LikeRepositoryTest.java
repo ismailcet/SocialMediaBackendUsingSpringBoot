@@ -16,7 +16,7 @@ class LikeRepositoryTest {
     @Autowired
     private LikeRepository likeRepository;
 
-
+    //Create a Like Record
     @Test
     public void createLike(){
         LocalDateTime timezone
@@ -26,13 +26,14 @@ class LikeRepositoryTest {
                 new User("ismailcet3","pass3","iso","çet","i@g.com",20);
 
         Post post =
-                new Post(timezone,"Deneme Content" , "Url" , user);
+                new Post(timezone,"Deneme Content"  , user);
 
         Like like = new Like(user,post);
 
         likeRepository.save(like);
     }
 
+    //Get All Likes
     @Test
     public void getAllLike(){
         List<Like> likeList =
@@ -41,11 +42,13 @@ class LikeRepositoryTest {
         System.out.println("Likes : " + likeList);
     }
 
+    //Delete a Like Record
     @Test
     public void deleteLikeById(){
         likeRepository.deleteById(6);
     }
 
+    //Update a Like Record
     @Test
     public void updateLikeById(){
         LocalDateTime timezone
@@ -58,12 +61,21 @@ class LikeRepositoryTest {
 
         if(like != null) {
             Post post =
-                    new Post(timezone,"Deneme Content 2 " , "Url" , like.getUser());
+                    new Post(timezone,"Deneme Content 2 " , like.getUser());
             newLike.setId(like.getId());
             newLike.setUser(like.getUser());
             newLike.setPost(post);
 
             likeRepository.save(newLike);
         }
+    }
+
+    //Get likes with post id
+    @Test
+    public void getLikeByPostId(){
+        List<Like> likes =
+                likeRepository.findByPostId(17);
+
+        System.out.println("Likes : " + likes);
     }
 }

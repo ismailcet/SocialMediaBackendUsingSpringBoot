@@ -16,6 +16,7 @@ class FollowRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    //Create a Follow Record
     @Test
     public void createFollow(){
         User user1 =
@@ -30,10 +31,13 @@ class FollowRepositoryTest {
 
     }
 
+    //Delete a Follow record
     @Test
     public void deleteFollowById(){
         followRepository.deleteById(8);
     }
+
+    //Update a Follow Record
     @Test
     public void updateFollowById(){
         User user =
@@ -54,4 +58,14 @@ class FollowRepositoryTest {
         }
 
     }
+
+    //Get the follower count of a user by user id
+    @Test
+    public void countFollowByUserId(){
+        Integer count =
+                followRepository.getFollowersCount(128);
+
+        System.out.println("Follow Count : " + count);
+    }
+
 }
