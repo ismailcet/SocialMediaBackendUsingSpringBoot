@@ -25,7 +25,7 @@ public class Post {
 
     @ManyToOne(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name = "user_id",
@@ -35,7 +35,7 @@ public class Post {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id") //**
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "id")

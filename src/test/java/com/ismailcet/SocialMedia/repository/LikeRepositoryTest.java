@@ -28,7 +28,7 @@ class LikeRepositoryTest {
         Post post =
                 new Post(timezone,"Deneme Content"  , user);
 
-        Like like = new Like(user,post);
+        Like like = new Like(user,post,timezone);
 
         likeRepository.save(like);
     }

@@ -18,7 +18,8 @@ public class Share {
     private String url;
 
     @OneToOne(
-            fetch = FetchType.EAGER
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name = "post_id",

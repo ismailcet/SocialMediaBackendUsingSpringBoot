@@ -17,7 +17,7 @@ public class Like {
 
     @ManyToOne(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name = "byuser_id",
@@ -30,7 +30,7 @@ public class Like {
 
     @ManyToOne(
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name="post_id",
@@ -49,10 +49,13 @@ public class Like {
     }
 
     //AllArgsConstructor
-    public Like(User user, Post post) {
+
+    public Like(User user, Post post, LocalDateTime createdDate) {
         this.user = user;
         this.post = post;
+        this.createdDate = createdDate;
     }
+
 
     //Getter
 
@@ -68,6 +71,9 @@ public class Like {
         return post;
     }
 
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
     //Setter
 
 
@@ -81,6 +87,10 @@ public class Like {
 
     public void setPost(Post post) {
         this.post = post;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     @Override

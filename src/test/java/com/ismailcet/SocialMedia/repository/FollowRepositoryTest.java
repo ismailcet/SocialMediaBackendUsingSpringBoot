@@ -61,7 +61,7 @@ class FollowRepositoryTest {
 
     //Get the follower count of a user by user id
     @Test
-    public void countFollowByUserId(){
+    public void countFollowByUserId(){  // User create  // Asserts
         Integer count =
                 followRepository.getFollowersCount(128);
 
