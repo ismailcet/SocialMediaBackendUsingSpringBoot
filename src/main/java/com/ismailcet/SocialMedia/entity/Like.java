@@ -56,6 +56,12 @@ public class Like {
         this.createdDate = createdDate;
     }
 
+    //Builder Pattern
+    public Like(LikeBuilder likeBuilder){
+        this.user = likeBuilder.user;
+        this.post = likeBuilder.post;
+        this.createdDate = likeBuilder.createdDate;
+    }
 
     //Getter
 
@@ -100,5 +106,28 @@ public class Like {
                 ", user=" + user +
                 ", post=" + post +
                 '}';
+    }
+
+    public static class LikeBuilder{
+        private User user;
+        private Post post;
+        private LocalDateTime createdDate;
+
+        public LikeBuilder user(User user){
+            this.user = user;
+            return this;
+        }
+        public LikeBuilder post(Post post){
+            this.post = post;
+            return this;
+        }
+
+        public LikeBuilder createDate(LocalDateTime createdDate){
+            this.createdDate = createdDate;
+            return this;
+        }
+        public Like build(){
+            return new Like(this);
+        }
     }
 }

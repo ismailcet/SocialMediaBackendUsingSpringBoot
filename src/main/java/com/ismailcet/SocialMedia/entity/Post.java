@@ -52,6 +52,13 @@ public class Post {
         this.user = user;
     }
 
+    //Build Pattern
+    public Post(PostBuilder postBuilder){
+        this.createdDate = postBuilder.createdDate;
+        this.content = postBuilder.content;
+        this.user = postBuilder.user;
+    }
+
     //Getter
 
     public Integer getId() {
@@ -114,5 +121,37 @@ public class Post {
                 ", content='" + content + '\'' +
                 ", user=" + user +
                 '}';
+    }
+
+    public static class PostBuilder{
+        private LocalDateTime createdDate;
+        private String content;
+        private User user;
+        private List<Comment> comments;
+        private List<Like> likes;
+
+        public PostBuilder createdDate(LocalDateTime createdDate){
+            this.createdDate = createdDate;
+            return this;
+        }
+        public PostBuilder content(String content){
+            this.content = content;
+            return this;
+        }
+        public PostBuilder user(User user){
+            this.user = user;
+            return this;
+        }
+        public PostBuilder comments(List<Comment> comments){
+            this.comments = comments;
+            return this;
+        }
+        public PostBuilder likes(List<Like> likes){
+            this.likes = likes;
+            return this;
+        }
+        public Post build(){
+            return new Post(this);
+        }
     }
 }

@@ -40,6 +40,12 @@ public class Share {
         this.post = post;
     }
 
+    //Builder Pattern
+    public Share(ShareBuilder shareBuilder){
+        this.url = shareBuilder.url;
+        this.post = shareBuilder.post;
+    }
+
     //Getter
 
     public Integer getId() {
@@ -77,5 +83,23 @@ public class Share {
                 ", url='" + url + '\'' +
                 ", post=" + post +
                 '}';
+    }
+
+    public static class ShareBuilder{
+        private String url;
+        private Post post;
+
+        public ShareBuilder url(String url){
+            this.url = url;
+            return this;
+        }
+        public ShareBuilder post(Post post){
+            this.post = post;
+            return this;
+        }
+
+        public Share build(){
+            return new Share(this);
+        }
     }
 }

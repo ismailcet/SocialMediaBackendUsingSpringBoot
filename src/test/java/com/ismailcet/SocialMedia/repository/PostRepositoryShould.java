@@ -135,7 +135,7 @@ public class PostRepositoryShould {
         likeRepository.save(like);
 
         Post likedPost =
-                postRepository.getPostMostLikedThreeDays();
+                postRepository.getPostMostLikedThreeDays(3);
 
         assertNotNull(likedPost);
 

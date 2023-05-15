@@ -52,6 +52,13 @@ public class Comment {
         this.post = post;
     }
 
+    public Comment(CommentBuilder commentBuilder){
+        this.comment = commentBuilder.comment;
+        this.createdDate = commentBuilder.createdDate;
+        this.user = commentBuilder.user;
+        this.post = commentBuilder.post;
+    }
+
     //Getter
 
     public Integer getId() {
@@ -106,5 +113,32 @@ public class Comment {
                 ", user=" + user +
                 ", post=" + post +
                 '}';
+    }
+
+    public static class CommentBuilder{
+        private String comment;
+        private LocalDateTime createdDate;
+        private User user;
+        private Post post;
+
+        public CommentBuilder comment(String Comment){
+            this.comment = comment;
+            return this;
+        }
+        public CommentBuilder createdDate(LocalDateTime createdDate){
+            this.createdDate = createdDate;
+            return this;
+        }
+        public CommentBuilder user(User user){
+            this.user = user;
+            return this;
+        }
+        public CommentBuilder post(Post post){
+            this.post = post;
+            return this;
+        }
+        public Comment build(){
+            return new Comment(this);
+        }
     }
 }

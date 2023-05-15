@@ -4,6 +4,7 @@ import com.ismailcet.SocialMedia.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
@@ -18,8 +19,9 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     public Post getPostwithUsernameMostComment(String username);
 
     @Query(
-            value = "SELECT posts.id ,posts.user_id,posts.created_date, posts.content from posts INNER JOIN likesforpostsbyuser l ON posts.id = l.post_id WHERE l.created_Date >= (CURRENT_DATE - INTERVAL '3 days') GROUP BY posts.id ORDER BY COUNT(l) DESC LIMIT 1",
+            value = "SELECT posts.id ,posts.user_id,posts.created_date, posts.content from posts INNER JOIN likesforpostsbyuser l ON posts.id = l.post_id WHERE l.created_Date >= (CURRENT_DATE - ?1) GROUP BY posts.id ORDER BY COUNT(l) DESC LIMIT 1",  //>= (CURRENT_DATE - INTERVAL '3 days')
             nativeQuery = true
     )
-    public Post getPostMostLikedThreeDays();
+    @Transactional
+    public Post getPostMostLikedThreeDays(Integer day);
 }

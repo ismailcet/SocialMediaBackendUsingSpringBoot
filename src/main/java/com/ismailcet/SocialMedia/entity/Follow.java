@@ -50,6 +50,12 @@ public class Follow {
         this.followingUser = followingUser;
     }
 
+    //Builder Pattern
+    public Follow(FollowBuilder followBuilder){
+        this.followUser = followBuilder.followUser;
+        this.followingUser = followBuilder.followingUser;
+    }
+
     //Getter
 
     public Integer getId() {
@@ -84,5 +90,22 @@ public class Follow {
                 ", followUser=" + followUser +
                 ", followingUser=" + followingUser +
                 '}';
+    }
+    public static class FollowBuilder{
+        private User followUser;
+        private User followingUser;
+
+        public FollowBuilder followUser(User followUser){
+            this.followUser = followUser;
+            return this;
+        }
+        public FollowBuilder followingUser(User followingUser){
+            this.followingUser = followingUser;
+            return this;
+        }
+
+        public Follow build(){
+            return new Follow(this);
+        }
     }
 }

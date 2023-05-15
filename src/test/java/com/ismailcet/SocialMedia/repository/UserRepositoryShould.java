@@ -1,6 +1,7 @@
 package com.ismailcet.SocialMedia.repository;
 
 import com.ismailcet.SocialMedia.entity.User;
+import com.ismailcet.SocialMedia.util.PasswordUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,8 +23,15 @@ public class UserRepositoryShould {
 
     @Test
     public void createUser_WhenParametersValid_Succesfully(){
-        User user =
-                new User("ismailTest","passwordTest","FirstName","LastName","email@gmail.com",12);
+
+        User user = new User.UserBuilder()
+                .userName("deneme")
+                .password("deneme")
+                .email("demeöe")
+                .firstName("deneme")
+                .lastName("deneöme")
+                .age(15)
+                .build();
         userRepository.save(user);
 
         User createdUser =
@@ -46,6 +54,7 @@ public class UserRepositoryShould {
                 userRepository.findById(user.getId()).orElse(null);
         assertNull(deletedUser);
     }
+
 
     @Test
     public void updateUser_WhenGivenIdValid_ThenUpdateUserAnyFieldSuccesfully(){
