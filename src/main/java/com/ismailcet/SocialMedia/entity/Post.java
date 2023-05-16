@@ -23,19 +23,15 @@ public class Post {
     private String content;
 
 
-    @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_id",
             referencedColumnName = "id",
             nullable = false
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToMany(mappedBy = "id") //**
+    @OneToMany(mappedBy = "id")
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "id")
@@ -127,8 +123,6 @@ public class Post {
         private LocalDateTime createdDate;
         private String content;
         private User user;
-        private List<Comment> comments;
-        private List<Like> likes;
 
         public PostBuilder createdDate(LocalDateTime createdDate){
             this.createdDate = createdDate;
@@ -140,14 +134,6 @@ public class Post {
         }
         public PostBuilder user(User user){
             this.user = user;
-            return this;
-        }
-        public PostBuilder comments(List<Comment> comments){
-            this.comments = comments;
-            return this;
-        }
-        public PostBuilder likes(List<Like> likes){
-            this.likes = likes;
             return this;
         }
         public Post build(){

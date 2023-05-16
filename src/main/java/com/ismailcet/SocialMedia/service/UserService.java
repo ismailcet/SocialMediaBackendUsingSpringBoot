@@ -1,9 +1,14 @@
 package com.ismailcet.SocialMedia.service;
 
+import com.ismailcet.SocialMedia.dto.UserDto;
+import com.ismailcet.SocialMedia.dto.UserDtoConverter;
+import com.ismailcet.SocialMedia.dto.request.CreateUserRequest;
+import com.ismailcet.SocialMedia.dto.request.UpdateUserRequest;
+import com.ismailcet.SocialMedia.dto.response.GetUserByUsernameResponse;
 import com.ismailcet.SocialMedia.entity.User;
 import com.ismailcet.SocialMedia.repository.UserRepository;
-import com.ismailcet.SocialMedia.response.GetAllUsersResponse;
-import com.ismailcet.SocialMedia.response.GetUserByIdResponse;
+import com.ismailcet.SocialMedia.dto.response.GetAllUsersResponse;
+import com.ismailcet.SocialMedia.dto.response.GetUserByIdResponse;
 import com.ismailcet.SocialMedia.util.PasswordUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,83 +21,58 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserDtoConverter userDtoConverter;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
         this.userRepository = userRepository;
+        this.userDtoConverter = userDtoConverter;
     }
 
-    public ResponseEntity<String> signup(Map<String, String> requestMap){
+    public ResponseEntity<UserDto> signup(CreateUserRequest createUserRequest){
         try{
-
-            if(validateSignUp(requestMap)){
-                User user =
-                        userRepository.findByUserName(requestMap.get("username"));
-                if(Objects.isNull(user)){
-                    userRepository.save(setUserFromMap(requestMap));
-                    return new ResponseEntity<String>("Successfully Registered" , HttpStatus.OK);
-                }else{
-                    return new ResponseEntity<String>("Username Already Exists",HttpStatus.OK);
-                }
+            User user =
+                    userRepository.findByUserName(createUserRequest.getUsername());
+            if(Objects.isNull(user)){
+                User newUser = new User.UserBuilder()
+                                .userName(createUserRequest.getUsername())
+                                .firstName(createUserRequest.getName())
+                                .lastName(createUserRequest.getSurname())
+                                .email(createUserRequest.getEmail())
+                                .age(createUserRequest.getAge())
+                                .password(PasswordUtil.hashPassword(createUserRequest.getPassword()))
+                                .build();
+                userRepository.save(newUser);
+                return new ResponseEntity<>(userDtoConverter.convert(newUser) , HttpStatus.OK);
             }else{
-                return new ResponseEntity<String>("Invalid Data",HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null,HttpStatus.OK);
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return new ResponseEntity<String>("Something Went Wrong ! " , HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(null , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<String> updateUserById(Integer id, Map<String, String> requestMap) {
+    public ResponseEntity<UserDto> updateUserById(Integer id, UpdateUserRequest updateUserRequest) {
         try{
             Optional<User> user = userRepository.findById(id);
             if(user.isPresent()){
-                User findUser = user.get();
-                userRepository.save(updateUserFromMap(requestMap, findUser));
-                return new ResponseEntity<String>("Successfuly Updated",HttpStatus.OK);
+                user.get().setUserName(updateUserRequest.getUsername());
+                user.get().setPassword(PasswordUtil.hashPassword(updateUserRequest.getPassword()));
+                user.get().setFirstName(updateUserRequest.getName());
+                user.get().setLastName(updateUserRequest.getSurname());
+                user.get().setAge(updateUserRequest.getAge());
+
+                userRepository.save(user.get());
+                return new ResponseEntity<>(userDtoConverter.convert(user.get()),HttpStatus.OK);
             }else{
-                return new ResponseEntity<String>("Something Went Wrong",HttpStatus.OK);
+                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return new ResponseEntity<String>("Something Went Wrong",HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private boolean validateSignUp(Map<String, String> requestMap) {
-
-        if(requestMap.containsKey("username")
-                && requestMap.containsKey("password")
-                && requestMap.containsKey("email")
-                && requestMap.containsKey("name")
-                && requestMap.containsKey("surname")
-                && requestMap.containsKey("age")){
-            return true;
-        }
-        return false;
-    }
-    private User setUserFromMap(Map<String, String> requestMap) {
-
-        User user = new User.UserBuilder()
-                .userName(requestMap.get("username"))
-                .password(PasswordUtil.hashPassword(requestMap.get("password")))
-                .email(requestMap.get("email"))
-                .firstName(requestMap.get("name"))
-                .lastName(requestMap.get("surname"))
-                .age(Integer.parseInt(requestMap.get("age")))
-                .build();
-        System.out.println(user);
-        return user;
-    }
-
-    private User updateUserFromMap(Map<String, String> requestMap, User user){
-        user.setUserName(requestMap.get("username"));
-        user.setFirstName(requestMap.get("name"));
-        user.setAge(Integer.parseInt(requestMap.get("age")));
-        user.setLastName(requestMap.get("surname"));
-        user.setPassword(PasswordUtil.hashPassword(requestMap.get("password")));
-
-        return user;
-    }
 
     public ResponseEntity<String> deleteUserById(Integer id) {
         try{
@@ -130,6 +110,20 @@ public class UserService {
                 return new ResponseEntity<>(new GetUserByIdResponse(user.get()),HttpStatus.OK);
             }
             return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public ResponseEntity<GetUserByUsernameResponse> getUserByUsername(String username) {
+        try{
+            User user =
+                    userRepository.findByUserName(username);
+            if(!Objects.isNull(user)){
+                return new ResponseEntity<>(new GetUserByUsernameResponse(user), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }catch (Exception ex){
             ex.printStackTrace();
         }

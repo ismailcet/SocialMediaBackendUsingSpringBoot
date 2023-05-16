@@ -21,7 +21,7 @@ public class Comment {
     @Column(name="created_date")
     private LocalDateTime createdDate;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name="byuser_id",
             referencedColumnName = "id",
@@ -30,7 +30,7 @@ public class Comment {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name="post_id",
             referencedColumnName = "id",
@@ -121,7 +121,7 @@ public class Comment {
         private User user;
         private Post post;
 
-        public CommentBuilder comment(String Comment){
+        public CommentBuilder comment(String comment){
             this.comment = comment;
             return this;
         }

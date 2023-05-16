@@ -45,6 +45,14 @@ public class User {
         this.email = email;
         this.age = age;
     }
+    private User(UserBuilder userBuilder){
+        this.userName = userBuilder.userName;
+        this.password = userBuilder.password;
+        this.firstName = userBuilder.firstName;
+        this.lastName = userBuilder.lastName;
+        this.email = userBuilder.email;
+        this.age = userBuilder.age;
+    }
 
     //Getter
     public Integer getId() {
@@ -115,5 +123,40 @@ public class User {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 '}';
+    }
+    public static class UserBuilder{
+        private String userName;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Integer age;
+        public UserBuilder userName(String userName){
+            this.userName = userName;
+            return this;
+        }
+        public UserBuilder password(String password){
+            this.password = password;
+            return this;
+        }
+        public UserBuilder firstName(String firstName){
+            this.firstName = firstName;
+            return this;
+        }
+        public UserBuilder lastName(String lastName){
+            this.lastName = lastName;
+            return this;
+        }
+        public UserBuilder email(String email){
+            this.email = email;
+            return this;
+        }
+        public UserBuilder age(Integer age){
+            this.age = age;
+            return this;
+        }
+        public User build(){
+            return new User(this);
+        }
     }
 }

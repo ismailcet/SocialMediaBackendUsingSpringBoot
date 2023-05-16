@@ -15,8 +15,7 @@ public class Follow {
     private Integer id;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name="followed_userid",
@@ -27,8 +26,7 @@ public class Follow {
     private User followUser;
 
     @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     @JoinColumn(
             name="following_userid",

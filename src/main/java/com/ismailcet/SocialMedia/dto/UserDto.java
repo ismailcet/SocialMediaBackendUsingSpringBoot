@@ -1,8 +1,8 @@
-package com.ismailcet.SocialMedia.response;
+package com.ismailcet.SocialMedia.dto;
 
 import com.ismailcet.SocialMedia.entity.User;
 
-public class GetUserByIdResponse {
+public class UserDto {
     private Integer id;
     private String userName;
     private String email;
@@ -10,7 +10,7 @@ public class GetUserByIdResponse {
     private String lastName;
     private Integer age;
 
-    public GetUserByIdResponse(User user){
+    public UserDto(User user){
         this.id = user.getId();
         this.userName = user.getUserName();
         this.firstName = user.getFirstName();
@@ -18,7 +18,8 @@ public class GetUserByIdResponse {
         this.email = user.getEmail();
         this.age = user.getAge();
     }
-    public GetUserByIdResponse(){
+
+    public UserDto() {
     }
 
     public Integer getId() {
