@@ -1,7 +1,7 @@
 package com.ismailcet.SocialMedia.dto;
 
 import java.time.LocalDateTime;
-
+//deleted
 public class CommentDto {
     private Integer id;
     private String comment;
