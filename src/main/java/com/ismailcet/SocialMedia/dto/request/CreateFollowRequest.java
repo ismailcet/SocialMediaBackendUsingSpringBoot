@@ -2,8 +2,12 @@ package com.ismailcet.SocialMedia.dto.request;
 
 import com.ismailcet.SocialMedia.entity.User;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateFollowRequest {
+    @NotNull(message = "Followed User Id may not be null")
     private Integer followUser_id;
+    @NotNull(message = "Following User Id may not be null")
     private Integer followingUser_id;
 
     public CreateFollowRequest() {

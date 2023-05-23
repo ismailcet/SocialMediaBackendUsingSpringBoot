@@ -1,6 +1,9 @@
 package com.ismailcet.SocialMedia.dto.request;
 
+import javax.validation.constraints.NotNull;
+
 public class UpdatePostRequest {
+    @NotNull(message = "Content may not be null")
     private String content;
 
     public UpdatePostRequest() {

@@ -1,7 +1,7 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.FollowDto;
-import com.ismailcet.SocialMedia.dto.FollowDtoConverter;
+import com.ismailcet.SocialMedia.util.converter.FollowDtoConverter;
 import com.ismailcet.SocialMedia.dto.request.CreateFollowRequest;
 import com.ismailcet.SocialMedia.entity.Follow;
 import com.ismailcet.SocialMedia.entity.User;

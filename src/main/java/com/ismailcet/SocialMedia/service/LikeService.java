@@ -1,7 +1,7 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.LikeDto;
-import com.ismailcet.SocialMedia.dto.LikeDtoConverter;
+import com.ismailcet.SocialMedia.util.converter.LikeDtoConverter;
 import com.ismailcet.SocialMedia.dto.request.CreateLikeRequest;
 import com.ismailcet.SocialMedia.entity.Like;
 import com.ismailcet.SocialMedia.entity.Post;

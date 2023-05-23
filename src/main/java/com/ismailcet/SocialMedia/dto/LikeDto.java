@@ -1,10 +1,17 @@
 package com.ismailcet.SocialMedia.dto;
 
+import com.ismailcet.SocialMedia.entity.Like;
+import com.ismailcet.SocialMedia.entity.Post;
+import com.ismailcet.SocialMedia.entity.User;
+
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class LikeDto {
     private Integer id;
+    @NotNull(message = "User may not be null")
     private UserDto user;
+    @NotNull(message = "Post may not be null")
     private PostDto post;
     private LocalDateTime createdDate;
 
@@ -17,6 +24,12 @@ public class LikeDto {
         this.user = user;
         this.post = post;
         this.createdDate = createdDate;
+    }
+
+    public LikeDto(LikeDtoBuilder likeDtoBuilder){
+        this.user = likeDtoBuilder.user;
+        this.post = likeDtoBuilder.post;
+        this.createdDate = likeDtoBuilder.createdDate;
     }
 
     public Integer getId() {
@@ -49,5 +62,28 @@ public class LikeDto {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public class LikeDtoBuilder{
+        private UserDto user;
+        private PostDto post;
+        private LocalDateTime createdDate;
+
+        public LikeDtoBuilder user(UserDto user){
+            this.user = user;
+            return this;
+        }
+        public LikeDtoBuilder post(PostDto post){
+            this.post = post;
+            return this;
+        }
+
+        public LikeDtoBuilder createDate(LocalDateTime createdDate){
+            this.createdDate = createdDate;
+            return this;
+        }
+        public LikeDto build(){
+            return new LikeDto(this);
+        }
     }
 }

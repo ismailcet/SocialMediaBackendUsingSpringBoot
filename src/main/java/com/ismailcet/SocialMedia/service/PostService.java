@@ -1,7 +1,7 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.PostDto;
-import com.ismailcet.SocialMedia.dto.PostDtoConverter;
+import com.ismailcet.SocialMedia.util.converter.PostDtoConverter;
 import com.ismailcet.SocialMedia.dto.UserDto;
 import com.ismailcet.SocialMedia.dto.request.CreatePostRequest;
 import com.ismailcet.SocialMedia.dto.request.UpdatePostRequest;

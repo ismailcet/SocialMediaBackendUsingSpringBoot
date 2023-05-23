@@ -3,12 +3,16 @@ package com.ismailcet.SocialMedia.dto.request;
 import com.ismailcet.SocialMedia.entity.Post;
 import com.ismailcet.SocialMedia.entity.User;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CreateCommentRequest {
+    @NotNull(message = "Comment may not be null")
     private String comment;
     private LocalDateTime createdDate;
+    @NotNull(message = "User Id may not be null")
     private Integer user_id;
+    @NotNull(message = "Post Id may not be null")
     private Integer post_id;
 
     public CreateCommentRequest() {

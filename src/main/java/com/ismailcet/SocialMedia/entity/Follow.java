@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="followuser")
@@ -23,6 +24,7 @@ public class Follow {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "Followed User Id may not be null")
     private User followUser;
 
     @ManyToOne(
@@ -34,6 +36,7 @@ public class Follow {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "Following User Id may not be null")
     private User followingUser;
 
     //NoArgsConstructor

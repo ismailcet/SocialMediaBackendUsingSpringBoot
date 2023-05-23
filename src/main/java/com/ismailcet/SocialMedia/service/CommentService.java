@@ -1,7 +1,7 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.CommentDto;
-import com.ismailcet.SocialMedia.dto.CommentDtoConverter;
+import com.ismailcet.SocialMedia.util.converter.CommentDtoConverter;
 import com.ismailcet.SocialMedia.dto.request.CreateCommentRequest;
 import com.ismailcet.SocialMedia.dto.request.UpdateCommentRequest;
 import com.ismailcet.SocialMedia.entity.Comment;

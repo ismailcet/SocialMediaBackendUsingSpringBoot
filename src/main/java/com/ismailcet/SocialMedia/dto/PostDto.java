@@ -3,12 +3,15 @@ package com.ismailcet.SocialMedia.dto;
 import com.ismailcet.SocialMedia.entity.Post;
 import com.ismailcet.SocialMedia.entity.User;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class PostDto {
 
     private Integer id;
+    @NotNull(message = "Content may not be null")
     private String content;
+    @NotNull(message = "User Id may not be null")
     private UserDto user;
     private LocalDateTime createdDate;
 
@@ -21,6 +24,8 @@ public class PostDto {
 
     public PostDto() {
     }
+
+
 
     public Integer getId() {
         return id;

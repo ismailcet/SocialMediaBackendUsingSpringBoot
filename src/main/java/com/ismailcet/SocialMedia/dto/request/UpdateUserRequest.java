@@ -1,12 +1,18 @@
 package com.ismailcet.SocialMedia.dto.request;
 
-public class UpdateUserRequest {
-    private String username;
-    private String password;
-    private String name;
-    private String surname;
-    private Integer age;
+import javax.validation.constraints.NotNull;
 
+public class UpdateUserRequest {
+    @NotNull(message = "Username may not be null")
+    private String username;
+    @NotNull(message = "Password may not be null")
+    private String password;
+    @NotNull(message = "Name may not be null")
+    private String name;
+    @NotNull(message = "Surname may not be null")
+    private String surname;
+    @NotNull(message = "Age may not be null")
+    private Integer age;
     public UpdateUserRequest() {
     }
 

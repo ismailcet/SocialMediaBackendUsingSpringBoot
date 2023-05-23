@@ -1,7 +1,11 @@
 package com.ismailcet.SocialMedia.dto.request;
 
+import javax.validation.constraints.NotNull;
+
 public class CreatePostRequest {
+    @NotNull(message = "Content may not be null")
     private String content;
+    @NotNull(message = "User Id may not be null")
     private Integer user_id;
 
     public CreatePostRequest() {

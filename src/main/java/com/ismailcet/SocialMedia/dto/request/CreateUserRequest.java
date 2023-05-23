@@ -1,11 +1,19 @@
 package com.ismailcet.SocialMedia.dto.request;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateUserRequest {
+    @NotNull(message = "Username may not be null")
     private String username;
+    @NotNull(message = "Password may not be null")
     private String password;
+    @NotNull(message = "Name may not be null")
     private String name;
+    @NotNull(message = "Surname may not be null")
     private String surname;
+    @NotNull(message = "Email may not be null")
     private String email;
+    @NotNull(message = "Age may not be null")
     private Integer age;
 
     public CreateUserRequest() {

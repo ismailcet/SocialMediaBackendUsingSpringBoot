@@ -3,10 +3,13 @@ package com.ismailcet.SocialMedia.dto.request;
 import com.ismailcet.SocialMedia.entity.Post;
 import com.ismailcet.SocialMedia.entity.User;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class CreateLikeRequest {
+    @NotNull(message = "User Id may not be null")
     private Integer user_id;
+    @NotNull(message = "Post Id may not be null")
     private Integer post_id;
     private LocalDateTime createdDate;
 

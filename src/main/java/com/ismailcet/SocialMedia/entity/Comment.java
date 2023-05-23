@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +17,7 @@ public class Comment {
     private Integer id;
 
     @Column(name="comment")
+    @NotNull(message = "Comment may not be null")
     private String comment;
 
     @Column(name="created_date")
@@ -28,6 +30,7 @@ public class Comment {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "User Id may not be null")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,6 +40,7 @@ public class Comment {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "Post Id may not be null")
     private Post post;
 
     //NoAllArgsConstructor

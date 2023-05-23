@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserDto> signup(@RequestBody CreateUserRequest createUserRequest){
+    public ResponseEntity<UserDto> signup(@Valid @RequestBody CreateUserRequest createUserRequest){
         try{
             return userService.signup(createUserRequest);
         }catch (Exception ex){

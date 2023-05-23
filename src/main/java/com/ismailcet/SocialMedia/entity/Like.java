@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +25,7 @@ public class Like {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "User Id may not be null")
     private User user;
 
 
@@ -36,6 +38,7 @@ public class Like {
             nullable = false
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "Post Id may not be null")
     private Post post;
 
     @Column(name = "created_date")

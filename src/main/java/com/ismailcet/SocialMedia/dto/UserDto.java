@@ -2,12 +2,19 @@ package com.ismailcet.SocialMedia.dto;
 
 import com.ismailcet.SocialMedia.entity.User;
 
+import javax.validation.constraints.NotNull;
+
 public class UserDto {
     private Integer id;
+    @NotNull(message = "Username may not be null")
     private String userName;
+    @NotNull(message = "Email may not be null")
     private String email;
+    @NotNull(message = "Firstname may not be null")
     private String firstName;
+    @NotNull(message = "Lastname may not be null")
     private String lastName;
+    @NotNull(message = "Age may not be null")
     private Integer age;
 
     public UserDto(User user){
@@ -20,6 +27,14 @@ public class UserDto {
     }
 
     public UserDto() {
+    }
+
+    private UserDto(UserDtoBuilder userDtoBuilder){
+        this.userName = userDtoBuilder.userName;
+        this.email=userDtoBuilder.email;
+        this.firstName=userDtoBuilder.firstName;
+        this.lastName=userDtoBuilder.lastName;
+        this.age=userDtoBuilder.age;
     }
 
     public Integer getId() {
@@ -68,5 +83,37 @@ public class UserDto {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public static class UserDtoBuilder{
+        private String userName;
+        private String email;
+        private String firstName;
+        private String lastName;
+        private Integer age;
+
+        public UserDtoBuilder userName(String userName){
+            this.userName = userName;
+            return this;
+        }
+        public UserDtoBuilder email(String email){
+            this.email = email;
+            return this;
+        }
+        public UserDtoBuilder firstName(String firstName){
+            this.firstName= firstName;
+            return this;
+        }
+        public UserDtoBuilder lastName(String lastName){
+            this.lastName= lastName;
+            return this;
+        }
+        public UserDtoBuilder age(Integer age){
+            this.age = age;
+            return this;
+        }
+        public UserDto build(){
+            return new UserDto(this);
+        }
     }
 }

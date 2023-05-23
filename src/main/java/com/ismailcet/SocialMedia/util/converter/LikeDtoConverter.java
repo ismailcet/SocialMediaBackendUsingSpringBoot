@@ -1,5 +1,8 @@
-package com.ismailcet.SocialMedia.dto;
+package com.ismailcet.SocialMedia.util.converter;
 
+import com.ismailcet.SocialMedia.dto.LikeDto;
+import com.ismailcet.SocialMedia.dto.PostDto;
+import com.ismailcet.SocialMedia.dto.UserDto;
 import com.ismailcet.SocialMedia.entity.Like;
 import org.springframework.stereotype.Component;
 

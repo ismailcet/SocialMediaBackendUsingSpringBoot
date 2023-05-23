@@ -2,11 +2,14 @@ package com.ismailcet.SocialMedia.dto.response;
 
 import com.ismailcet.SocialMedia.dto.UserDto;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class GetPostByPostIdResponse {
     private Integer id;
+    @NotNull(message = "Content may not be null")
     private String content;
+    @NotNull(message = "User Id may not be null")
     private UserDto user;
     private LocalDateTime createdDate;
 

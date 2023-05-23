@@ -2,12 +2,19 @@ package com.ismailcet.SocialMedia.dto.response;
 
 import com.ismailcet.SocialMedia.entity.User;
 
+import javax.validation.constraints.NotNull;
+
 public class GetUserByUsernameResponse {
     private Integer id;
+    @NotNull(message = "Username may not be null")
     private String userName;
+    @NotNull(message = "Email may not be null")
     private String email;
+    @NotNull(message = "Firstname may not be null")
     private String firstName;
+    @NotNull(message = "Lastname may not be null")
     private String lastName;
+    @NotNull(message = "Age may not be null")
     private Integer age;
 
     public GetUserByUsernameResponse(User user){

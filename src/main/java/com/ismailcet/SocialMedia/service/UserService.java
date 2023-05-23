@@ -1,7 +1,7 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.UserDto;
-import com.ismailcet.SocialMedia.dto.UserDtoConverter;
+import com.ismailcet.SocialMedia.util.converter.UserDtoConverter;
 import com.ismailcet.SocialMedia.dto.request.CreateUserRequest;
 import com.ismailcet.SocialMedia.dto.request.UpdateUserRequest;
 import com.ismailcet.SocialMedia.dto.response.GetUserByUsernameResponse;

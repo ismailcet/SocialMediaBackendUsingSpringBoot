@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "share")
@@ -15,6 +16,7 @@ public class Share {
     private Integer id;
 
     @Column(name="url")
+    @NotNull(message = "Share may not be null")
     private String url;
 
     @OneToOne(
@@ -26,6 +28,7 @@ public class Share {
             referencedColumnName = "id"
     )
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull(message = "Post Id may not be null")
     private Post post;
 
     //NoArgsConstructor

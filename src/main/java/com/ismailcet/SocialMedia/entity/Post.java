@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,8 +21,8 @@ public class Post {
     private LocalDateTime createdDate;
 
     @Column(name="content")
+    @NotNull(message = "Content may not be null")
     private String content;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -29,6 +30,7 @@ public class Post {
             referencedColumnName = "id",
             nullable = false
     )
+    @NotNull(message = "User Id may not be null")
     private User user;
 
     @OneToMany(mappedBy = "id")

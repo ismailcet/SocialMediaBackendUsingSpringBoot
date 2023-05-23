@@ -1,6 +1,9 @@
 package com.ismailcet.SocialMedia.dto.request;
 
+import javax.validation.constraints.NotNull;
+
 public class UpdateCommentRequest {
+    @NotNull(message = "")
     private String comment;
 
     public UpdateCommentRequest() {
