@@ -1,6 +1,8 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.UserDto;
+import com.ismailcet.SocialMedia.exception.GeneralExceptionAdvisor;
+import com.ismailcet.SocialMedia.exception.UserNotFoundException;
 import com.ismailcet.SocialMedia.util.converter.UserDtoConverter;
 import com.ismailcet.SocialMedia.dto.request.CreateUserRequest;
 import com.ismailcet.SocialMedia.dto.request.UpdateUserRequest;
@@ -10,9 +12,12 @@ import com.ismailcet.SocialMedia.repository.UserRepository;
 import com.ismailcet.SocialMedia.dto.response.GetAllUsersResponse;
 import com.ismailcet.SocialMedia.dto.response.GetUserByIdResponse;
 import com.ismailcet.SocialMedia.util.PasswordUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,37 +27,38 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDtoConverter userDtoConverter;
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
         this.userRepository = userRepository;
         this.userDtoConverter = userDtoConverter;
     }
 
-    public ResponseEntity<UserDto> signup(CreateUserRequest createUserRequest){
+    public UserDto signup(CreateUserRequest createUserRequest){
         try{
             User user =
                     userRepository.findByUserName(createUserRequest.getUsername());
             if(Objects.isNull(user)){
                 User newUser = new User.UserBuilder()
-                                .userName(createUserRequest.getUsername())
-                                .firstName(createUserRequest.getName())
-                                .lastName(createUserRequest.getSurname())
-                                .email(createUserRequest.getEmail())
-                                .age(createUserRequest.getAge())
-                                .password(PasswordUtil.hashPassword(createUserRequest.getPassword()))
-                                .build();
+                        .userName(createUserRequest.getUsername())
+                        .firstName(createUserRequest.getName())
+                        .lastName(createUserRequest.getSurname())
+                        .email(createUserRequest.getEmail())
+                        .age(createUserRequest.getAge())
+                        .password(PasswordUtil.hashPassword(createUserRequest.getPassword()))
+                        .build();
                 userRepository.save(newUser);
-                return new ResponseEntity<>(userDtoConverter.convert(newUser) , HttpStatus.OK);
+                return userDtoConverter.convert(newUser);
             }else{
-                return new ResponseEntity<>(null,HttpStatus.OK);
+                throw new UserNotFoundException("Username already is taken ! ");
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch(Exception ex){
+            logger.info(ex.getMessage());
+            throw new UserNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null , HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<UserDto> updateUserById(Integer id, UpdateUserRequest updateUserRequest) {
+    public UserDto updateUserById(Integer id, UpdateUserRequest updateUserRequest) {
         try{
             Optional<User> user = userRepository.findById(id);
             if(user.isPresent()){
@@ -63,70 +69,69 @@ public class UserService {
                 user.get().setAge(updateUserRequest.getAge());
 
                 userRepository.save(user.get());
-                return new ResponseEntity<>(userDtoConverter.convert(user.get()),HttpStatus.OK);
+                return userDtoConverter.convert(user.get());
             }else{
-                return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+                throw new UserNotFoundException("User Id is not valid ! ");
             }
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new UserNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
-    public ResponseEntity<String> deleteUserById(Integer id) {
+    public Void deleteUserById(Integer id) {
         try{
             Optional<User> user = userRepository.findById(id);
             if(user.isPresent()){
                 userRepository.deleteById(user.get().getId());
-                return new ResponseEntity<String>("Successfully Deleted", HttpStatus.OK);
             }
-            return new ResponseEntity<String>("User id doesn not exist", HttpStatus.BAD_REQUEST);
+            throw new UserNotFoundException("User id does not exist");
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new UserNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<String>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<List<GetAllUsersResponse>> getAllUser() {
+    public List<GetAllUsersResponse> getAllUser() {
         try{
             List<GetAllUsersResponse> users =
                     userRepository.findAll().stream()
                             .map(p-> new GetAllUsersResponse(p))
                             .collect(Collectors.toList());
 
-            return new ResponseEntity<>(users, HttpStatus.OK);
+            return users;
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new UserNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<GetUserByIdResponse> getUserById(Integer id) {
+    public GetUserByIdResponse getUserById(Integer id) {
         try{
             Optional<User> user =
                     userRepository.findById(id);
             if(user.isPresent()){
-                return new ResponseEntity<>(new GetUserByIdResponse(user.get()),HttpStatus.OK);
+                return new GetUserByIdResponse(user.get());
             }
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            throw new UserNotFoundException("User Id is not exists ! ");
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new UserNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<GetUserByUsernameResponse> getUserByUsername(String username) {
+    public GetUserByUsernameResponse getUserByUsername(String username) {
         try{
             User user =
                     userRepository.findByUserName(username);
             if(!Objects.isNull(user)){
-                return new ResponseEntity<>(new GetUserByUsernameResponse(user), HttpStatus.OK);
+                return new GetUserByUsernameResponse(user);
             }
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            throw new UserNotFoundException("Username is not exist ! ");
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new UserNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -6,6 +6,8 @@ import com.ismailcet.SocialMedia.dto.request.UpdateUserRequest;
 import com.ismailcet.SocialMedia.dto.response.GetAllUsersResponse;
 import com.ismailcet.SocialMedia.dto.response.GetUserByIdResponse;
 import com.ismailcet.SocialMedia.dto.response.GetUserByUsernameResponse;
+import com.ismailcet.SocialMedia.exception.GeneralExceptionAdvisor;
+import com.ismailcet.SocialMedia.exception.UserNotFoundException;
 import com.ismailcet.SocialMedia.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,62 +29,36 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(@Valid @RequestBody CreateUserRequest createUserRequest){
-        try{
-            return userService.signup(createUserRequest);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(userService.signup(createUserRequest));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> updateUserById(@PathVariable("id") Integer id, @RequestBody UpdateUserRequest updateUserRequest){
-        try{
-            return userService.updateUserById(id,updateUserRequest);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable("id") Integer id){
-        try{
-            return userService.deleteUserById(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<String>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Void> deleteUserById(@PathVariable("id") Integer id){
+        userService.deleteUserById(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping()
     public ResponseEntity<List<GetAllUsersResponse>> getAllUsers(){
-        try{
-            return userService.getAllUser();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(userService.getAllUser());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetUserByIdResponse> getUserById(@PathVariable("id") Integer id){
-        try{
-            return userService.getUserById(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/getUsername/{username}")
     public ResponseEntity<GetUserByUsernameResponse> getUserByUsername(@PathVariable("username") String username){
-        try{
-            return userService.getUserByUsername(username);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return ResponseEntity.ok(userService.getUserByUsername(username));
+
     }
 
 }
