@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/api/likes")
+@RequestMapping("/likes")
 public class LikeController {
 
     private final LikeService likeService;
@@ -22,31 +22,19 @@ public class LikeController {
 
     @PostMapping()
     public ResponseEntity<LikeDto> createLike(@RequestBody CreateLikeRequest createLikeRequest){
-        try{
-            return likeService.createLike(createLikeRequest);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(likeService.createLike(createLikeRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteLikeByLikeId(@PathVariable("id") Integer id){
-        try{
-            return likeService.deleteLikeByLikeId(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Void> deleteLikeByLikeId(@PathVariable("id") Integer id){
+        likeService.deleteLikeByLikeId(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/post/{postId}")
     public ResponseEntity<List<LikeDto>> getLikesByPostId(@PathVariable("postId") Integer postId){
-        try{
-            return likeService.getLikesByPostId(postId);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        return ResponseEntity.ok(likeService.getLikesByPostId(postId));
+
     }
 }

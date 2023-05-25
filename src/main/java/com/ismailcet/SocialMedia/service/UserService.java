@@ -80,13 +80,14 @@ public class UserService {
     }
 
 
-    public Void deleteUserById(Integer id) {
+    public void deleteUserById(Integer id) {
         try{
             Optional<User> user = userRepository.findById(id);
             if(user.isPresent()){
                 userRepository.deleteById(user.get().getId());
+            }else{
+                throw new UserNotFoundException("User id does not exist");
             }
-            throw new UserNotFoundException("User id does not exist");
         }catch (Exception ex){
             logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());

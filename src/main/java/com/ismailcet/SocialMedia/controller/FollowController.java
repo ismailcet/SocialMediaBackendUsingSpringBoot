@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/api/follows")
+@RequestMapping("/follows")
 public class FollowController {
 
     private final FollowService followService;
@@ -20,31 +20,17 @@ public class FollowController {
 
     @PostMapping()
     public ResponseEntity<FollowDto> createFollow(@RequestBody CreateFollowRequest createFollowRequest){
-        try{
-            return followService.createFollow(createFollowRequest);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+       return ResponseEntity.ok(followService.createFollow(createFollowRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteFollowById(@PathVariable("id") Integer id){
-        try{
-            return followService.deleteFollowById(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>("Something Went Wrong ! " , HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Void> deleteFollowById(@PathVariable("id") Integer id){
+        followService.deleteFollowById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/followerCount/{followedId}")
     public ResponseEntity<String> getFollowerCountByUserId(@PathVariable("followedId") Integer id){
-        try{
-            return followService.getFollowerCountByUserId(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>("Something Went Wrong ! ", HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(followService.getFollowerCountByUserId(id));
     }
 }

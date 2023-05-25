@@ -1,6 +1,7 @@
 package com.ismailcet.SocialMedia.service;
 
 import com.ismailcet.SocialMedia.dto.PostDto;
+import com.ismailcet.SocialMedia.exception.PostNotFoundException;
 import com.ismailcet.SocialMedia.util.converter.PostDtoConverter;
 import com.ismailcet.SocialMedia.dto.UserDto;
 import com.ismailcet.SocialMedia.dto.request.CreatePostRequest;
@@ -11,6 +12,8 @@ import com.ismailcet.SocialMedia.entity.Post;
 import com.ismailcet.SocialMedia.entity.User;
 import com.ismailcet.SocialMedia.repository.PostRepository;
 import com.ismailcet.SocialMedia.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,13 +32,15 @@ public class PostService {
 
     private final PostDtoConverter postDtoConverter;
 
+    Logger logger = LoggerFactory.getLogger(PostService.class);
+
     public PostService(PostRepository postRepository, UserRepository userRepository, PostDtoConverter postDtoConverter) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.postDtoConverter = postDtoConverter;
     }
 
-    public ResponseEntity<PostDto> createPost(CreatePostRequest createPostRequest) {
+    public PostDto createPost(CreatePostRequest createPostRequest) {
         try{
             Optional<User> user =
                     userRepository.findById(createPostRequest.getUser_id());
@@ -49,17 +54,17 @@ public class PostService {
                         .build();
                 postRepository.save(post);
 
-                return new ResponseEntity<>(postDtoConverter.convert(post),HttpStatus.CREATED);
+                return postDtoConverter.convert(post);
             }
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            throw new PostNotFoundException("Post id already exists ! ");
 
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<PostDto> updatePostByPostId(Integer id, UpdatePostRequest updatePostRequest) {
+    public PostDto updatePostByPostId(Integer id, UpdatePostRequest updatePostRequest) {
         try{
             Optional<Post> post =
                     postRepository.findById(id);
@@ -68,31 +73,31 @@ public class PostService {
                 post.get().setContent(updatePostRequest.getContent());
                 postRepository.save(post.get());
 
-                return new ResponseEntity<>(postDtoConverter.convert(post.get()), HttpStatus.CREATED);
+                return postDtoConverter.convert(post.get());
             }
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            throw new PostNotFoundException("Post Id does not exists ! ");
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<String> deletePostByPostId(Integer id) {
+    public void deletePostByPostId(Integer id) {
         try{
             Optional<Post> post =
                     postRepository.findById(id);
             if(post.isPresent()){
                 postRepository.deleteById(id);
-                return new ResponseEntity<>("Post Successfully Deleted", HttpStatus.OK);
+            }else{
+                throw new PostNotFoundException("Post Id does not exists ! ");
             }
-            return new ResponseEntity<>("Post id does not exists", HttpStatus.BAD_REQUEST);
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<List<GetAllPostsResponse>> getAllPosts() {
+    public List<GetAllPostsResponse> getAllPosts() {
         try{
             List<GetAllPostsResponse> posts =
                     postRepository.findAll().stream()
@@ -102,14 +107,14 @@ public class PostService {
                                     new UserDto(post.getUser()),
                                     post.getCreatedDate()))
                             .collect(Collectors.toList());
-            return new ResponseEntity<>(posts, HttpStatus.OK);
+            return posts;
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException("Something Went Wrong ! ");
         }
-        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<GetPostByPostIdResponse> getPostByPostId(Integer id) {
+    public GetPostByPostIdResponse getPostByPostId(Integer id) {
         try{
             Optional<Post> postOne =
                     postRepository.findById(id);
@@ -121,36 +126,36 @@ public class PostService {
                         ,new UserDto(postOne.get().getUser())
                         ,postOne.get().getCreatedDate());
 
-                return new ResponseEntity<>(post, HttpStatus.OK);
+                return post;
             }
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            throw new PostNotFoundException("Post id does not exists ! ");
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<PostDto> getPostMostLikedThreeDays(Integer day) {
+    public PostDto getPostMostLikedThreeDays(Integer day) {
         try{
             Post post =
                     postRepository.getPostMostLikedThreeDays(day);
 
-            return new ResponseEntity<>(postDtoConverter.convert(post),HttpStatus.OK);
+            return postDtoConverter.convert(post);
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<PostDto> getPostwithUsernameMostComment(String username) {
+    public PostDto getPostWithUsernameMostComment(String username) {
         try{
             Post post =
                     postRepository.getPostwithUsernameMostComment(username);
 
-            return new ResponseEntity<>(postDtoConverter.convert(post), HttpStatus.OK);
+            return postDtoConverter.convert(post);
         }catch (Exception ex){
-            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw new PostNotFoundException(ex.getMessage());
         }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/api/posts")
+@RequestMapping("/posts")
 public class PostController {
 
     private final PostService postService;
@@ -26,71 +26,37 @@ public class PostController {
 
     @PostMapping()
     public ResponseEntity<PostDto> createPost(@RequestBody CreatePostRequest createPostRequest){
-        try{
-            return postService.createPost(createPostRequest);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(postService.createPost(createPostRequest));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePostByPostId(@PathVariable("id") Integer id , @RequestBody UpdatePostRequest updatePostRequest){
-        try{
-            return postService.updatePostByPostId(id,updatePostRequest);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(postService.updatePostByPostId(id,updatePostRequest));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePostByPostId(@PathVariable("id") Integer id){
-        try{
-            return postService.deletePostByPostId(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Void> deletePostByPostId(@PathVariable("id") Integer id){
+        postService.deletePostByPostId(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping()
     public ResponseEntity<List<GetAllPostsResponse>> getAllPosts(){
-        try{
-            return postService.getAllPosts();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(postService.getAllPosts());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetPostByPostIdResponse> getPostByPostId(@PathVariable("id") Integer id){
-        try{
-            return postService.getPostByPostId(id);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(postService.getPostByPostId(id));
     }
 
     @GetMapping("/like/{day}")
     public ResponseEntity<PostDto> getPostMostLikedThreeDays(@PathVariable("day") Integer day){
-        try{
-            return postService.getPostMostLikedThreeDays(day);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(postService.getPostMostLikedThreeDays(day));
     }
 
     @GetMapping("/comment/{username}")
     public ResponseEntity<PostDto> getPostwithUsernameMostComment(@PathVariable("username") String username){
-        try{
-            return postService.getPostwithUsernameMostComment(username);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.ok(postService.getPostWithUsernameMostComment(username));
     }
 }

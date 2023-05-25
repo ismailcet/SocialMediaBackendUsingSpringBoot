@@ -47,13 +47,59 @@ public class GeneralExceptionAdvisor extends ResponseEntityExceptionHandler {
 
     }
 
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<Object> handlerPostNotFoundException(PostNotFoundException ex){
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
 
-//    @ExceptionHandler(UserNotFoundException.class)
-//    public ResponseEntity<Object> handleExceptions( UserNotFoundException exception, WebRequest webRequest) {
-//        ExceptionResponse response = new ExceptionResponse();
-//        response.setDateTime(LocalDateTime.now());
-//        response.setMessage(exception.getMessage());
-//        return new ResponseEntity<Object>(response,HttpStatus.NOT_FOUND);
-//    }
+        ExceptionResponse err = new ExceptionResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND,
+                "Resource Not Found",
+                details);
+
+        return new ResponseEntity<>(err, err.getStatus());
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<Object> handlerPostNotFoundException(CommentNotFoundException ex){
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+
+        ExceptionResponse err = new ExceptionResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND,
+                "Resource Not Found",
+                details);
+
+        return new ResponseEntity<>(err, err.getStatus());
+    }
+    @ExceptionHandler(LikeNotFoundException.class)
+    public ResponseEntity<Object> handlerPostNotFoundException(LikeNotFoundException ex){
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+
+        ExceptionResponse err = new ExceptionResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND,
+                "Resource Not Found",
+                details);
+
+        return new ResponseEntity<>(err, err.getStatus());
+    }
+    @ExceptionHandler(FollowNotFoundException.class)
+    public ResponseEntity<Object> handlerPostNotFoundException(FollowNotFoundException ex){
+        List<String> details = new ArrayList<>();
+        details.add(ex.getMessage());
+
+        ExceptionResponse err = new ExceptionResponse(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND,
+                "Resource Not Found",
+                details);
+
+        return new ResponseEntity<>(err, err.getStatus());
+    }
+
 
 }
