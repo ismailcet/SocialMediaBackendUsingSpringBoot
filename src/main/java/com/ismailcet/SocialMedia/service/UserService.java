@@ -27,7 +27,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDtoConverter userDtoConverter;
-    //Logger logger = LoggerFactory.getLogger(UserService.class);
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
         this.userRepository = userRepository;
@@ -55,7 +55,8 @@ public class UserService {
                 throw new UserNotFoundException("Username already is taken ! ");
             }
         }catch(Exception ex){
-            //logger.info(ex.getMessage());
+            System.out.println(ex);
+            logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
@@ -76,7 +77,7 @@ public class UserService {
                 throw new UserNotFoundException("User Id is not valid ! ");
             }
         }catch (Exception ex){
-            //logger.info(ex.getMessage());
+            logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
