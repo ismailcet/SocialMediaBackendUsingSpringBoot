@@ -27,7 +27,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserDtoConverter userDtoConverter;
-    Logger logger = LoggerFactory.getLogger(UserService.class);
+    //Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
         this.userRepository = userRepository;
@@ -39,6 +39,7 @@ public class UserService {
             User user =
                     userRepository.findByUserName(createUserRequest.getUsername());
             if(Objects.isNull(user)){
+
                 User newUser = new User.UserBuilder()
                         .userName(createUserRequest.getUsername())
                         .firstName(createUserRequest.getName())
@@ -47,13 +48,14 @@ public class UserService {
                         .age(createUserRequest.getAge())
                         .password(PasswordUtil.hashPassword(createUserRequest.getPassword()))
                         .build();
+
                 userRepository.save(newUser);
                 return userDtoConverter.convert(newUser);
             }else{
                 throw new UserNotFoundException("Username already is taken ! ");
             }
         }catch(Exception ex){
-            logger.info(ex.getMessage());
+            //logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
@@ -74,7 +76,7 @@ public class UserService {
                 throw new UserNotFoundException("User Id is not valid ! ");
             }
         }catch (Exception ex){
-            logger.info(ex.getMessage());
+            //logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
@@ -89,7 +91,7 @@ public class UserService {
                 throw new UserNotFoundException("User id does not exist");
             }
         }catch (Exception ex){
-            logger.info(ex.getMessage());
+            //logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
@@ -103,7 +105,7 @@ public class UserService {
 
             return users;
         }catch (Exception ex){
-            logger.info(ex.getMessage());
+            //logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
@@ -117,7 +119,7 @@ public class UserService {
             }
             throw new UserNotFoundException("User Id is not exists ! ");
         }catch (Exception ex){
-            logger.info(ex.getMessage());
+            //logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }
@@ -131,7 +133,7 @@ public class UserService {
             }
             throw new UserNotFoundException("Username is not exist ! ");
         }catch (Exception ex){
-            logger.info(ex.getMessage());
+            //logger.info(ex.getMessage());
             throw new UserNotFoundException(ex.getMessage());
         }
     }

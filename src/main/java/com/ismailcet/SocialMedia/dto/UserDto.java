@@ -3,7 +3,6 @@ package com.ismailcet.SocialMedia.dto;
 import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
-
 public class UserDto {
     private Integer id;
     @NotNull(message = "Username may not be null")

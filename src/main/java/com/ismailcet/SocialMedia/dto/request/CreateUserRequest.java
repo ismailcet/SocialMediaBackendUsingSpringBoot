@@ -1,6 +1,8 @@
 package com.ismailcet.SocialMedia.dto.request;
 
+
 import javax.validation.constraints.NotNull;
+
 
 public class CreateUserRequest {
     @NotNull(message = "Username may not be null")
