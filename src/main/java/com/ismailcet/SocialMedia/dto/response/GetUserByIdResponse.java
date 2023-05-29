@@ -3,6 +3,7 @@ package com.ismailcet.SocialMedia.dto.response;
 import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class GetUserByIdResponse {
     private Integer id;
@@ -26,6 +27,14 @@ public class GetUserByIdResponse {
         this.age = user.getAge();
     }
     public GetUserByIdResponse(){
+    }
+    private GetUserByIdResponse(GetUserByIdResponseBuilder getUserByIdResponseBuilder){
+        this.id = getUserByIdResponseBuilder.id;
+        this.userName = getUserByIdResponseBuilder.userName;
+        this.firstName = getUserByIdResponseBuilder.firstName;
+        this.lastName = getUserByIdResponseBuilder.lastName;
+        this.email = getUserByIdResponseBuilder.email;
+        this.age = getUserByIdResponseBuilder.age;
     }
 
     public Integer getId() {
@@ -74,5 +83,67 @@ public class GetUserByIdResponse {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "GetUserByIdResponse{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GetUserByIdResponse)) return false;
+        GetUserByIdResponse that = (GetUserByIdResponse) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getUserName(), that.getUserName()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getAge(), that.getAge());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUserName(), getEmail(), getFirstName(), getLastName(), getAge());
+    }
+
+    public static class GetUserByIdResponseBuilder{
+        private Integer id;
+        private String userName;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Integer age;
+
+        public GetUserByIdResponseBuilder id(Integer id){
+            this.id = id;
+            return this;
+        }
+        public GetUserByIdResponseBuilder userName(String userName){
+            this.userName = userName;
+            return this;
+        }
+        public GetUserByIdResponseBuilder firstName(String firstName){
+            this.firstName = firstName;
+            return this;
+        }
+        public GetUserByIdResponseBuilder lastName(String lastName){
+            this.lastName = lastName;
+            return this;
+        }
+        public GetUserByIdResponseBuilder email(String email){
+            this.email = email;
+            return this;
+        }
+        public GetUserByIdResponseBuilder age(Integer age){
+            this.age = age;
+            return this;
+        }
+        public GetUserByIdResponse build(){
+            return new GetUserByIdResponse(this);
+        }
     }
 }

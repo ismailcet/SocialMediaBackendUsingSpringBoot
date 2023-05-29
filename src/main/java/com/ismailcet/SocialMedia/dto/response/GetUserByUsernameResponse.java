@@ -3,6 +3,7 @@ package com.ismailcet.SocialMedia.dto.response;
 import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class GetUserByUsernameResponse {
     private Integer id;
@@ -26,6 +27,15 @@ public class GetUserByUsernameResponse {
         this.age = user.getAge();
     }
     public GetUserByUsernameResponse(){
+    }
+
+    private GetUserByUsernameResponse(GetUserByUsernameResponseBuilder getUserByUsernameResponseBuilder){
+        this.id = getUserByUsernameResponseBuilder.id;
+        this.userName = getUserByUsernameResponseBuilder.userName;
+        this.firstName = getUserByUsernameResponseBuilder.firstName;
+        this.lastName = getUserByUsernameResponseBuilder.lastName;
+        this.email = getUserByUsernameResponseBuilder.email;
+        this.age = getUserByUsernameResponseBuilder.age;
     }
 
     public Integer getId() {
@@ -74,5 +84,67 @@ public class GetUserByUsernameResponse {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "GetUserByUsernameResponse{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GetUserByUsernameResponse)) return false;
+        GetUserByUsernameResponse that = (GetUserByUsernameResponse) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getUserName(), that.getUserName()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getAge(), that.getAge());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUserName(), getEmail(), getFirstName(), getLastName(), getAge());
+    }
+
+    public static class GetUserByUsernameResponseBuilder{
+        private Integer id;
+        private String userName;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private Integer age;
+
+        public GetUserByUsernameResponseBuilder id(Integer id){
+            this.id = id;
+            return this;
+        }
+        public GetUserByUsernameResponseBuilder userName(String userName){
+            this.userName = userName;
+            return this;
+        }
+        public GetUserByUsernameResponseBuilder firstName(String firstName){
+            this.firstName = firstName;
+            return this;
+        }
+        public GetUserByUsernameResponseBuilder lastName(String lastName){
+            this.lastName = lastName;
+            return this;
+        }
+        public GetUserByUsernameResponseBuilder email(String email){
+            this.email = email;
+            return this;
+        }
+        public GetUserByUsernameResponseBuilder age(Integer age){
+            this.age = age;
+            return this;
+        }
+        public GetUserByUsernameResponse build(){
+            return new GetUserByUsernameResponse(this);
+        }
     }
 }

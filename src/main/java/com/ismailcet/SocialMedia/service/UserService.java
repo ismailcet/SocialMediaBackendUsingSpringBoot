@@ -78,7 +78,7 @@ public class UserService {
             }
         }catch (Exception ex){
             logger.info(ex.getMessage());
-            throw new UserNotFoundException(ex.getMessage());
+            throw new UserNotFoundException("User Id is not valid ! ");
         }
     }
 
@@ -89,7 +89,7 @@ public class UserService {
             if(user.isPresent()){
                 userRepository.deleteById(user.get().getId());
             }else{
-                throw new UserNotFoundException("User id does not exist");
+                throw new UserNotFoundException("User Id is not valid !");
             }
         }catch (Exception ex){
             //logger.info(ex.getMessage());

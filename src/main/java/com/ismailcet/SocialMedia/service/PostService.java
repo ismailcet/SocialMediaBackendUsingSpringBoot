@@ -56,7 +56,7 @@ public class PostService {
 
                 return postDtoConverter.convert(post);
             }
-            throw new PostNotFoundException("Post id already exists ! ");
+            throw new PostNotFoundException("User is not exists !");
 
         }catch (Exception ex){
             logger.info(ex.getMessage());
