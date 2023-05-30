@@ -6,6 +6,8 @@ import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
+
 //deleted
 public class CommentDto {
     private Integer id;
@@ -29,7 +31,11 @@ public class CommentDto {
     }
 
     public CommentDto(CommentDtoBuilder commentDtoBuilder){
-
+        this.id = commentDtoBuilder.id;
+        this.comment = commentDtoBuilder.comment;
+        this.createdDate = commentDtoBuilder.createdDate;
+        this.user = commentDtoBuilder.user;
+        this.post = commentDtoBuilder.post;
     }
 
     public Integer getId() {
@@ -72,12 +78,16 @@ public class CommentDto {
         this.post = post;
     }
 
-    public class CommentDtoBuilder{
+    public static class CommentDtoBuilder{
+        private Integer id;
         private String comment;
         private LocalDateTime createdDate;
         private UserDto user;
         private PostDto post;
-
+        public CommentDtoBuilder id(Integer id){
+            this.id = id;
+            return this;
+        }
         public CommentDtoBuilder comment(String comment){
             this.comment = comment;
             return this;
@@ -97,5 +107,29 @@ public class CommentDto {
         public CommentDto build(){
             return new CommentDto(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CommentDto{" +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                ", createdDate=" + createdDate +
+                ", user=" + user +
+                ", post=" + post +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CommentDto)) return false;
+        CommentDto that = (CommentDto) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getComment(), that.getComment()) && Objects.equals(getCreatedDate(), that.getCreatedDate()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getPost(), that.getPost());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getComment(), getCreatedDate(), getUser(), getPost());
     }
 }

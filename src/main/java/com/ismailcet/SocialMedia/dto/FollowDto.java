@@ -49,7 +49,7 @@ public class FollowDto {
         this.followingUser = followingUser;
     }
 
-    public class FollowDtoBuilder{
+    public static class FollowDtoBuilder{
         private UserDto followUser;
         private UserDto followingUser;
 

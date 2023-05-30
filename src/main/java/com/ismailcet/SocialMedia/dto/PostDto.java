@@ -5,6 +5,7 @@ import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class PostDto {
 
@@ -100,4 +101,26 @@ public class PostDto {
         }
     }
 
+    @Override
+    public String toString() {
+        return "PostDto{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PostDto)) return false;
+        PostDto postDto = (PostDto) o;
+        return Objects.equals(getId(), postDto.getId()) && Objects.equals(getContent(), postDto.getContent()) && Objects.equals(getUser(), postDto.getUser()) && Objects.equals(getCreatedDate(), postDto.getCreatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getContent(), getUser(), getCreatedDate());
+    }
 }

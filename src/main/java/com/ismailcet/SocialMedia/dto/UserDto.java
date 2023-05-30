@@ -3,6 +3,8 @@ package com.ismailcet.SocialMedia.dto;
 import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
 public class UserDto {
     private Integer id;
     @NotNull(message = "Username may not be null")
@@ -82,6 +84,31 @@ public class UserDto {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDto)) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(getId(), userDto.getId()) && Objects.equals(getUserName(), userDto.getUserName()) && Objects.equals(getEmail(), userDto.getEmail()) && Objects.equals(getFirstName(), userDto.getFirstName()) && Objects.equals(getLastName(), userDto.getLastName()) && Objects.equals(getAge(), userDto.getAge());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUserName(), getEmail(), getFirstName(), getLastName(), getAge());
     }
 
     public static class UserDtoBuilder{

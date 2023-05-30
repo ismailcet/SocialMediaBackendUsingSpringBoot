@@ -6,6 +6,7 @@ import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class LikeDto {
     private Integer id;
@@ -64,7 +65,7 @@ public class LikeDto {
         this.createdDate = createdDate;
     }
 
-    public class LikeDtoBuilder{
+    public static class LikeDtoBuilder{
         private UserDto user;
         private PostDto post;
         private LocalDateTime createdDate;
@@ -85,5 +86,28 @@ public class LikeDto {
         public LikeDto build(){
             return new LikeDto(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "LikeDto{" +
+                "id=" + id +
+                ", user=" + user +
+                ", post=" + post +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LikeDto)) return false;
+        LikeDto likeDto = (LikeDto) o;
+        return Objects.equals(getId(), likeDto.getId()) && Objects.equals(getUser(), likeDto.getUser()) && Objects.equals(getPost(), likeDto.getPost()) && Objects.equals(getCreatedDate(), likeDto.getCreatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUser(), getPost(), getCreatedDate());
     }
 }

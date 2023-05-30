@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name="likesforpostsbyuser")
@@ -100,15 +101,6 @@ public class Like {
         this.createdDate = createdDate;
     }
 
-    @Override
-    public String toString() {
-        return "Like{" +
-                "id=" + id +
-                ", user=" + user +
-                ", post=" + post +
-                '}';
-    }
-
     public static class LikeBuilder{
         private User user;
         private Post post;
@@ -130,5 +122,28 @@ public class Like {
         public Like build(){
             return new Like(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "id=" + id +
+                ", user=" + user +
+                ", post=" + post +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Like)) return false;
+        Like like = (Like) o;
+        return Objects.equals(getId(), like.getId()) && Objects.equals(getUser(), like.getUser()) && Objects.equals(getPost(), like.getPost()) && Objects.equals(getCreatedDate(), like.getCreatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUser(), getPost(), getCreatedDate());
     }
 }

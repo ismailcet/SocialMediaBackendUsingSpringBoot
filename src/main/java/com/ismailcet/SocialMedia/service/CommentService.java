@@ -54,7 +54,7 @@ public class CommentService {
                         .user(user.get())
                         .post(post.get())
                         .build();
-                System.out.println(comment);
+
                 commentRepository.save(comment);
                 return commentDtoConverter.convert(comment);
             }

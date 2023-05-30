@@ -4,6 +4,7 @@ import com.ismailcet.SocialMedia.dto.UserDto;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class GetPostByPostIdResponse {
     private Integer id;
@@ -53,5 +54,28 @@ public class GetPostByPostIdResponse {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    @Override
+    public String toString() {
+        return "GetPostByPostIdResponse{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GetPostByPostIdResponse)) return false;
+        GetPostByPostIdResponse that = (GetPostByPostIdResponse) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getContent(), that.getContent()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getCreatedDate(), that.getCreatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getContent(), getUser(), getCreatedDate());
     }
 }
