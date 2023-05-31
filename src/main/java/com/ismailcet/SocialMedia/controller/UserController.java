@@ -29,7 +29,10 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserDto> signup(@Valid @RequestBody CreateUserRequest createUserRequest){
-        return ResponseEntity.ok(userService.signup(createUserRequest));
+        return new ResponseEntity<>(
+                userService.signup(createUserRequest),
+                HttpStatus.CREATED
+        );
     }
 
     @PutMapping("/{id}")

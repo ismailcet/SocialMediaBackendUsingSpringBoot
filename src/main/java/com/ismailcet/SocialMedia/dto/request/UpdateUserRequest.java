@@ -1,6 +1,7 @@
 package com.ismailcet.SocialMedia.dto.request;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class UpdateUserRequest {
     @NotNull(message = "Username may not be null")
@@ -62,5 +63,29 @@ public class UpdateUserRequest {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateUserRequest{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", age=" + age +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UpdateUserRequest)) return false;
+        UpdateUserRequest that = (UpdateUserRequest) o;
+        return Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getName(), that.getName()) && Objects.equals(getSurname(), that.getSurname()) && Objects.equals(getAge(), that.getAge());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername(), getPassword(), getName(), getSurname(), getAge());
     }
 }
