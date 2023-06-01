@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 @WebMvcTest(controllers = UserController.class,excludeAutoConfiguration = {SecurityAutoConfiguration.class})
-class UserControllerTestIT {
+class UserControllerTest {
 
     @Autowired
     MockMvc mockMvc;

@@ -3,6 +3,7 @@ package com.ismailcet.SocialMedia.dto;
 import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class FollowDto {
     private Integer id;
@@ -64,5 +65,27 @@ public class FollowDto {
         public FollowDto build(){
             return new FollowDto(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "FollowDto{" +
+                "id=" + id +
+                ", followUser=" + followUser +
+                ", followingUser=" + followingUser +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FollowDto)) return false;
+        FollowDto followDto = (FollowDto) o;
+        return Objects.equals(getId(), followDto.getId()) && Objects.equals(getFollowUser(), followDto.getFollowUser()) && Objects.equals(getFollowingUser(), followDto.getFollowingUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFollowUser(), getFollowingUser());
     }
 }

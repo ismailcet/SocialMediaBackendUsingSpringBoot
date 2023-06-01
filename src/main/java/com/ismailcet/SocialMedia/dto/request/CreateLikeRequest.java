@@ -5,6 +5,7 @@ import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class CreateLikeRequest {
     @NotNull(message = "User Id may not be null")
@@ -44,5 +45,27 @@ public class CreateLikeRequest {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateLikeRequest{" +
+                "user_id=" + user_id +
+                ", post_id=" + post_id +
+                ", createdDate=" + createdDate +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CreateLikeRequest)) return false;
+        CreateLikeRequest that = (CreateLikeRequest) o;
+        return Objects.equals(getUser_id(), that.getUser_id()) && Objects.equals(getPost_id(), that.getPost_id()) && Objects.equals(getCreatedDate(), that.getCreatedDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUser_id(), getPost_id(), getCreatedDate());
     }
 }

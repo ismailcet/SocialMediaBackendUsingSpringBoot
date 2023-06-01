@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/follows")
 public class FollowController {
@@ -19,8 +21,10 @@ public class FollowController {
     }
 
     @PostMapping()
-    public ResponseEntity<FollowDto> createFollow(@RequestBody CreateFollowRequest createFollowRequest){
-       return ResponseEntity.ok(followService.createFollow(createFollowRequest));
+    public ResponseEntity<FollowDto> createFollow(@Valid @RequestBody CreateFollowRequest createFollowRequest){
+       return new ResponseEntity<>(
+               followService.createFollow(createFollowRequest),
+               HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

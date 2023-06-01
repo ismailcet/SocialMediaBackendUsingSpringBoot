@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,18 +23,21 @@ public class CommentController {
     }
 
     @PostMapping()
-    public ResponseEntity<CommentDto> createComment(@RequestBody CreateCommentRequest createCommentRequest){
-        return ResponseEntity.ok(commentService.createComment(createCommentRequest));
+    public ResponseEntity<CommentDto> createComment(@Valid @RequestBody CreateCommentRequest createCommentRequest){
+        return new ResponseEntity<>(
+                commentService.createComment(createCommentRequest),
+                HttpStatus.CREATED
+        );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentDto> updateCommentByCommentId(@PathVariable("id") Integer id, @RequestBody UpdateCommentRequest updateCommentRequest){
+    public ResponseEntity<CommentDto> updateCommentByCommentId(@Valid @PathVariable("id") Integer id,@Valid @RequestBody UpdateCommentRequest updateCommentRequest){
         return ResponseEntity.ok(commentService.updateCommentByCommentId(id, updateCommentRequest));
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCommentByCommentId(@PathVariable("id") Integer id){
+    public ResponseEntity<Void> deleteCommentByCommentId(@Valid @PathVariable("id") Integer id){
         commentService.deleteCommentByCommentId(id);
         return ResponseEntity.noContent().build();
     }

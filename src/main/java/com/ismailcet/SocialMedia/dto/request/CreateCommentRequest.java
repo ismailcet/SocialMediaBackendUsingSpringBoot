@@ -5,6 +5,7 @@ import com.ismailcet.SocialMedia.entity.User;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class CreateCommentRequest {
     @NotNull(message = "Comment may not be null")
@@ -55,5 +56,28 @@ public class CreateCommentRequest {
 
     public void setPost_id(Integer post_id) {
         this.post_id = post_id;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateCommentRequest{" +
+                "comment='" + comment + '\'' +
+                ", createdDate=" + createdDate +
+                ", user_id=" + user_id +
+                ", post_id=" + post_id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CreateCommentRequest)) return false;
+        CreateCommentRequest that = (CreateCommentRequest) o;
+        return Objects.equals(getComment(), that.getComment()) && Objects.equals(getCreatedDate(), that.getCreatedDate()) && Objects.equals(getUser_id(), that.getUser_id()) && Objects.equals(getPost_id(), that.getPost_id());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getComment(), getCreatedDate(), getUser_id(), getPost_id());
     }
 }

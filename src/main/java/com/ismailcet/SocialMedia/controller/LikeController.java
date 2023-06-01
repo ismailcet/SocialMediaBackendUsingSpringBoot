@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class LikeController {
     }
 
     @PostMapping()
-    public ResponseEntity<LikeDto> createLike(@RequestBody CreateLikeRequest createLikeRequest){
-        return ResponseEntity.ok(likeService.createLike(createLikeRequest));
+    public ResponseEntity<LikeDto> createLike(@Valid @RequestBody CreateLikeRequest createLikeRequest){
+        return new ResponseEntity<>(
+                likeService.createLike(createLikeRequest),
+                HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

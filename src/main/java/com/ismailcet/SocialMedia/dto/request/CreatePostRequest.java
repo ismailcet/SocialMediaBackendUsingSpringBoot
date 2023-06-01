@@ -1,6 +1,7 @@
 package com.ismailcet.SocialMedia.dto.request;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 public class CreatePostRequest {
     @NotNull(message = "Content may not be null")
@@ -30,5 +31,26 @@ public class CreatePostRequest {
 
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
+    }
+
+    @Override
+    public String toString() {
+        return "CreatePostRequest{" +
+                "content='" + content + '\'' +
+                ", user_id=" + user_id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CreatePostRequest)) return false;
+        CreatePostRequest that = (CreatePostRequest) o;
+        return Objects.equals(getContent(), that.getContent()) && Objects.equals(getUser_id(), that.getUser_id());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getContent(), getUser_id());
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +26,15 @@ public class PostController {
     }
 
     @PostMapping()
-    public ResponseEntity<PostDto> createPost(@RequestBody CreatePostRequest createPostRequest){
-        return ResponseEntity.ok(postService.createPost(createPostRequest));
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody CreatePostRequest createPostRequest){
+        return new ResponseEntity<>(
+                postService.createPost(createPostRequest)
+                ,HttpStatus.CREATED
+        );
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePostByPostId(@PathVariable("id") Integer id , @RequestBody UpdatePostRequest updatePostRequest){
+    public ResponseEntity<PostDto> updatePostByPostId(@Valid @PathVariable("id") Integer id ,@Valid @RequestBody UpdatePostRequest updatePostRequest){
         return ResponseEntity.ok(postService.updatePostByPostId(id,updatePostRequest));
     }
 
